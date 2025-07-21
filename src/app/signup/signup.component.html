@@ -1,0 +1,122 @@
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-purple-100 px-4">
+  <div class="bg-white rounded-3xl shadow-2xl p-8 sm:p-10 w-full max-w-3xl transition-all duration-500 hover:shadow-purple-300">
+    <h2 class="text-3xl font-bold text-center text-purple-600 mb-8">Create Account ✨</h2>
+
+    <form (ngSubmit)="onSubmit()" #signupForm="ngForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Full Name -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+        <input
+          type="text"
+          [(ngModel)]="signupData.name"
+          name="name"
+          required
+          placeholder="Enter your full name"
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+        />
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+        <input
+          type="email"
+          [(ngModel)]="signupData.email"
+          name="email"
+          required
+          placeholder="Enter your email"
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+        />
+      </div>
+
+      <!-- Age -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Age</label>
+        <input
+          type="number"
+          [(ngModel)]="signupData.age"
+          name="age"
+          required
+          min="1"
+          max="120"
+          placeholder="Enter your age"
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+        />
+      </div>
+
+      <!-- Gender -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
+        <select
+          [(ngModel)]="signupData.gender"
+          name="gender"
+          required
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+        >
+          <option value="" disabled selected>Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <!-- Role -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Role</label>
+        <select
+          [(ngModel)]="signupData.role"
+          name="role"
+          required
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+        >
+          <option value="" disabled selected>Select Role</option>
+          <option value="Frontend">Frontend</option>
+          <option value="Backend">Backend</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+        <input
+          type="password"
+          [(ngModel)]="signupData.password"
+          name="password"
+          required
+          placeholder="Create a password"
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+        />
+      </div>
+
+      <!-- Confirm Password -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+        <input
+          type="password"
+          [(ngModel)]="signupData.confirmPassword"
+          name="confirmPassword"
+          required
+          placeholder="Re-enter your password"
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+        />
+      </div>
+
+      <!-- Submit Button (full width) -->
+      <div class="md:col-span-2">
+        <button
+          type="submit"
+          [disabled]="!signupForm.form.valid"
+          class="w-full bg-purple-600 text-white py-2.5 rounded-xl font-semibold shadow-md hover:bg-purple-700 transition duration-300 hover:shadow-purple-400"
+        >
+          🚀 Sign Up
+        </button>
+      </div>
+    </form>
+
+    <!-- <p class="text-sm text-center text-gray-500 mt-6">
+      Already have an account?
+      <a href="/login" class="text-blue-500 font-semibold hover:underline">Login</a>
+    </p> -->
+  </div>
+</div>

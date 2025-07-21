@@ -1,0 +1,14 @@
+{
+  "users": [
+    {
+      "id": "88ce",
+      "name": "SreekanthReddy ",
+      "email": "sreekanthrachamalla42@gmail.com",
+      "password": "sree@123",
+      "role": "Frontend",
+      "confirmPassword": "sree@123",
+      "age": 23,
+      "gender": "Male"
+    }
+  ]
+}

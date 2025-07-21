@@ -1,0 +1,67 @@
+<div class="p-6">
+  <h2 class="text-2xl font-bold mb-4 text-center text-purple-700">User List</h2>
+
+  <!-- Add User Button -->
+  <div class="mb-4 text-right">
+    <button
+      (click)="onAddUser()"
+      
+      class="bg-green-600 text-white px-4 py-2 rounded-xl font-semibold hover:bg-green-700 shadow transition"
+   
+    >
+     <p> <a href="/signUp" class="text-blue-500 font-semibold hover:underline"> ➕ Add User</a>
+</p>
+     
+    </button>
+   
+  </div>
+
+  <!-- User Table -->
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white border border-gray-300 rounded-xl shadow">
+      <thead class="bg-purple-100 text-purple-700">
+        <tr>
+          <th class="px-4 py-2 border">#</th>
+          <th class="px-4 py-2 border">Name</th>
+          <th class="px-4 py-2 border">Email</th>
+          <th class="px-4 py-2 border">Age</th>
+          <th class="px-4 py-2 border">Gender</th>
+          <th class="px-4 py-2 border">Role</th>
+          <th class="px-4 py-2 border">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; let i = index" class="text-center">
+          <td class="border px-4 py-2">{{ i + 1 }}</td>
+          <td class="border px-4 py-2">{{ user.name }}</td>
+          <td class="border px-4 py-2">{{ user.email }}</td>
+          <td class="border px-4 py-2">{{ user.age }}</td>
+          <td class="border px-4 py-2">{{ user.gender }}</td>
+          <td class="border px-4 py-2">{{ user.role }}</td>
+          <td class="border px-4 py-2 space-x-2">
+        
+              <button (click)="editUser(user.id)"  class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">✏️ Edit</button>
+
+             
+           
+            <button
+              (click)="onDelete(user.id)"
+              class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+            >
+              🗑️ Delete
+            </button>
+
+     
+        <button 
+  [routerLink]="['/view', user.id]" 
+  class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
+  👁️ View
+</button>
+
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

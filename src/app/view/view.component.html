@@ -1,0 +1,23 @@
+<div class="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+  <div class="bg-white p-6 md:p-10 rounded-2xl shadow-lg w-full max-w-md">
+    <h2 class="text-2xl font-bold mb-6 text-purple-700 text-center">User Details</h2>
+
+    <div *ngIf="user; else loading">
+      <p class="mb-4"><span class="font-semibold text-gray-700">Name:</span> {{ user.name }}</p>
+      <p class="mb-4"><span class="font-semibold text-gray-700">Email:</span> {{ user.email }}</p>
+      <p class="mb-4"><span class="font-semibold text-gray-700">Age:</span> {{ user.age }}</p>
+      <p class="mb-4"><span class="font-semibold text-gray-700">Gender:</span> {{ user.gender }}</p>
+      <p class="mb-4"><span class="font-semibold text-gray-700">Role:</span> {{ user.role }}</p>
+    </div>
+
+    <ng-template #loading>
+      <p class="text-gray-500 text-center">Loading user data...</p>
+    </ng-template>
+
+    <div class="mt-6 text-center">
+      <a routerLink="/users" class="text-blue-600 hover:text-blue-800 underline">
+        🔙 Back to User List
+      </a>
+    </div>
+  </div>
+</div>
