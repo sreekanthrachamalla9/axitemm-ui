@@ -22,6 +22,7 @@
       <thead class="bg-purple-100 text-purple-700">
         <tr>
           <th class="px-4 py-2 border">#</th>
+          <!-- <th class="px-4 py-2 border">User ID</th> -->
           <th class="px-4 py-2 border">Name</th>
           <th class="px-4 py-2 border">Email</th>
           <th class="px-4 py-2 border">Age</th>
@@ -32,7 +33,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let user of users; let i = index" class="text-center">
-          <td class="border px-4 py-2">{{ i + 1 }}</td>
+          
+          <td class="border px-4 py-2">{{ user.id }}</td>
+
           <td class="border px-4 py-2">{{ user.name }}</td>
           <td class="border px-4 py-2">{{ user.email }}</td>
           <td class="border px-4 py-2">{{ user.age }}</td>
@@ -53,10 +56,11 @@
 
      
         <button 
-  [routerLink]="['/view', user.id]" 
+  (click)="viewUser(user.id)" 
   class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
   👁️ View
 </button>
+
 
 
           </td>

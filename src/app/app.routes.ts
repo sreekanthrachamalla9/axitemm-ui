@@ -9,5 +9,9 @@ export const routes: Routes = [
      { path: 'signUp', component: SignupComponent },
      { path: 'users', component: UserListComponent },
      { path: 'edit-user/:id', component: EditUserComponent },
-     {path: 'view/:id', component: ViewComponent}
+     {
+  path: 'view/:id',
+  loadComponent: () => import('./view/view.component').then(m => m.ViewComponent)
+}
+
 ];

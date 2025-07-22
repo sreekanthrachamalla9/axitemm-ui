@@ -3,23 +3,22 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/users'; // ✅ Make sure this is correct
+  private apiUrl = 'https://jsonplaceholder.typicode.com/users'; // json-server URL
 
   constructor(private http: HttpClient) {}
 
-  registerUser(data: any): Observable<any> {
-    return this.http.post(this.apiUrl, data);
+  getUsers(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
   }
 
-  getUserById(id: string) {
-  return this.http.get<any>(`http://localhost:3000/users/${id}`);
-}
+  registerUser(data: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, data);
+  }
 
-updateUser(id: string, data: any) {
-  return this.http.put(`http://localhost:3000/users/${id}`, data);
-}
-
+  deleteUser(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
 }

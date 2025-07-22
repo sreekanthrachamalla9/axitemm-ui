@@ -13,14 +13,24 @@ import { RouterModule } from '@angular/router';
 })
 export class ViewComponent implements OnInit {
   userId!: number;
-  user: any;
+  user: any = null;
+  errorMsg: string = '';
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.userId = Number(this.route.snapshot.paramMap.get('id'));
-    this.http.get(`http://localhost:3000/users/${this.userId}`).subscribe((res) => {
-      this.user = res;
-    });
+    const idParam = this.route.snapshot.paramMap.get('id');
+    if (idParam) {
+      this.userId = +idParam;
+      this.http.get(`http://localhost:3000/users/${this.userId}`).subscribe({
+        next: (res) => this.user = res,
+        error: (err) => {
+          this.errorMsg = 'User not found or server error';
+          console.error('Error fetching user:', err);
+        }
+      });
+    } else {
+      this.errorMsg = 'Invalid user ID in route';
+    }
   }
 }

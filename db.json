@@ -1,13 +1,13 @@
 {
   "users": [
     {
-      "id": "88ce",
-      "name": "SreekanthReddy ",
-      "email": "sreekanthrachamalla42@gmail.com",
-      "password": "sree@123",
+      "id": "b81b",
+      "name": "Sai",
+      "email": "amar123@gmail.com",
+      "password": "123456",
       "role": "Frontend",
-      "confirmPassword": "sree@123",
-      "age": 23,
+      "confirmPassword": "3456",
+      "age": 24,
       "gender": "Male"
     }
   ]

@@ -17,24 +17,35 @@ export class SignupComponent {
   signupData = {
     name: '',
     email: '',
-    password: '',
-    role:'',
-    confirmPassword: '',
-    age: '',
-    gender: '',
+    username:'',
   };
 
-  onSubmit() {
-    console.log('Submitting:', this.signupData);
+ onSubmit() {
+    const payload = { ...this.signupData };
+
+    // ✅ Safely delete 'id' if it somehow exists
+    if ('id' in payload) {
+      delete payload['id'];
+    }
+
+    console.log('🚀 Final payload being sent:', payload);
 
     this.authService.registerUser(this.signupData).subscribe(
-      res => {
-        console.log('User registered:', res);
+      (res: any) => {
+        console.log('✅ Response from json-server:', res);
+
+        // Check what ID you get
+        if (typeof res.id === 'string') {
+          console.warn('⚠️ ID is a string:', res.id);
+        } else {
+          console.log('✅ ID is a number:', res.id);
+        }
+
         alert('Signup successful!');
-        this.router.navigate(['/users']); // ✅ Redirect to user list
+        this.router.navigate(['/users']);
       },
       err => {
-        console.error('Signup error:', err);
+        console.error('❌ Signup error:', err);
       }
     );
   }
