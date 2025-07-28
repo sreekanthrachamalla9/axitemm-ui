@@ -1,42 +1,58 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // ✅ Add this
-import { RouterModule, ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from '../Service/auth.service';
 
 @Component({
   selector: 'app-edit-user',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule,HttpClientModule], // ✅ Add FormsModule here
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, HttpClientModule],
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.scss'],
 })
 export class EditUserComponent implements OnInit {
-  userData = {
-    name: '',
-    email: '',
-    role: '',
-    gender: '',
-    age: ''
-  };
+  private fb = inject(FormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private authService = inject(AuthService);
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {}
+  editForm!: FormGroup;
+  id: any;
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.http.get(`http://localhost:3000/users/${id}`).subscribe((data: any) => {
-        this.userData = data;
+    this.editForm = this.fb.group({
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
+    });
+    
+
+    this.id = this.route.snapshot.paramMap.get('id');
+    if (this.id) {
+      this.authService.getUserById(this.id).subscribe((res: any) => {
+        this.editForm.patchValue({
+          username: res.data.username,
+          email: res.data.email,
+        });
+
+        this.authService.getDashboard().subscribe((res: any) => {
+          const user = res.data.find((u: any) => u.id === +this.id);
+          if (user) {
+            this.editForm.patchValue({ password: user.password });
+          }
+        });
       });
     }
+      
+
   }
 
   onUpdateUser(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.http.put(`http://localhost:3000/users/${id}`, this.userData).subscribe(() => {
-        alert('User updated successfully');
+    if (this.editForm.valid) {
+      const updatedUser = this.editForm.value;
+      this.authService.updateUser(this.id, updatedUser).subscribe(() => {
         this.router.navigate(['/users']);
       });
     }

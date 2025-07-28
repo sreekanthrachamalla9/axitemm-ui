@@ -9,7 +9,7 @@
       class="bg-green-600 text-white px-4 py-2 rounded-xl font-semibold hover:bg-green-700 shadow transition"
    
     >
-     <p> <a href="/signUp" class="text-blue-500 font-semibold hover:underline"> ➕ Add User</a>
+     <p> <a href="/add-user" class="text-blue-500 font-semibold hover:underline"> ➕ Add User</a>
 </p>
      
     </button>
@@ -25,9 +25,6 @@
           <!-- <th class="px-4 py-2 border">User ID</th> -->
           <th class="px-4 py-2 border">Name</th>
           <th class="px-4 py-2 border">Email</th>
-          <th class="px-4 py-2 border">Age</th>
-          <th class="px-4 py-2 border">Gender</th>
-          <th class="px-4 py-2 border">Role</th>
           <th class="px-4 py-2 border">Actions</th>
         </tr>
       </thead>
@@ -36,11 +33,9 @@
           
           <td class="border px-4 py-2">{{ user.id }}</td>
 
-          <td class="border px-4 py-2">{{ user.name }}</td>
+          <td class="border px-4 py-2">{{ user.username }}</td>
           <td class="border px-4 py-2">{{ user.email }}</td>
-          <td class="border px-4 py-2">{{ user.age }}</td>
-          <td class="border px-4 py-2">{{ user.gender }}</td>
-          <td class="border px-4 py-2">{{ user.role }}</td>
+          
           <td class="border px-4 py-2 space-x-2">
         
               <button (click)="editUser(user.id)"  class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">✏️ Edit</button>

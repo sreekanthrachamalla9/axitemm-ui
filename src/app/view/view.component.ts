@@ -1,36 +1,41 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { AuthService } from '../Service/auth.service';
 
 @Component({
   selector: 'app-view',
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './view.component.html',
-  styleUrls: ['./view.component.scss']
+  styleUrls: ['./view.component.scss'],
 })
 export class ViewComponent implements OnInit {
-  userId!: number;
-  user: any = null;
-  errorMsg: string = '';
+  user: any;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(
+    private route: ActivatedRoute,
+    private authService: AuthService
+  ) {}
+
 
   ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam) {
-      this.userId = +idParam;
-      this.http.get(`http://localhost:3000/users/${this.userId}`).subscribe({
-        next: (res) => this.user = res,
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    if (!isNaN(id)) {
+      this.authService.getUserById(id).subscribe({
+        next: (res) => {
+         this.user = {
+             username: res.data.username,
+            email: res.data.email
+};
+
+        },
         error: (err) => {
-          this.errorMsg = 'User not found or server error';
           console.error('Error fetching user:', err);
-        }
+        },
       });
     } else {
-      this.errorMsg = 'Invalid user ID in route';
+      console.error('Invalid user ID');
     }
   }
 }

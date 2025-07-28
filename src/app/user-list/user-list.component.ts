@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../Service/auth.service';
 
 @Component({
@@ -14,49 +13,52 @@ import { AuthService } from '../Service/auth.service';
 export class UserListComponent implements OnInit {
   users: any[] = [];
 
-  constructor(private http: HttpClient, private router: Router,private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
-  ngOnInit() {
-  this.authService.getUsers().subscribe(data => {
-    this.users = data;  // 👌 id is already a number
-  });
-}
-
-
-  getUsers(): void {
-    this.http.get<any[]>('http://localhost:3000/users').subscribe(
-      (data) => (this.users = data),
-      (err) => console.error('Error fetching users:', err)
-    );
+  ngOnInit(): void {
+    this.loadUsers(); // ✅ Load users from real API on init
   }
 
+  // ✅ Load users using service
+  loadUsers(): void {
+    this.authService.getDashboard().subscribe({
+      next: (res: any) => {
+        this.users = res?.data || res;
+        console.log('Users loaded:', this.users);
+      },
+      error: (err) => {
+        console.error('Error loading users:', err);
+      }
+    });
+  }
+
+  // ✅ Navigate to signup
   onAddUser(): void {
     this.router.navigate(['/signup']);
   }
 
+  // ✅ Navigate to edit-user page
   editUser(id: number): void {
     this.router.navigate(['/edit-user', id]);
   }
-   loadUsers(): void {
-  this.authService.getUsers().subscribe((data: any[]) => {
-    this.users = data
-      .filter(user => !isNaN(Number(user.id)))                          // ✅ Keep only numeric IDs
-      .map(user => ({ ...user, id: Number(user.id) }))                  // ✅ Convert all IDs to number
-      .sort((a, b) => a.id - b.id);                                     // ✅ Now sort will work
-  });
-}
 
-
+  // ✅ Navigate to view-user page
   viewUser(id: number): void {
     this.router.navigate(['/view', id]);
   }
 
+  // ✅ Delete user using real API
   onDelete(id: number): void {
     if (confirm('Are you sure you want to delete this user?')) {
-      this.http.delete(`http://localhost:3000/users/${id}`).subscribe(
-        () => this.getUsers(),
-        (err) => console.error('Error deleting user:', err)
-      );
+      this.authService.deleteUser(id).subscribe({
+        next: () => {
+          console.log(`User ${id} deleted`);
+          this.loadUsers(); // Reload after deletion
+        },
+        error: (err) => {
+          console.error('Delete failed:', err);
+        }
+      });
     }
   }
 }

@@ -3,11 +3,9 @@
     <h2 class="text-2xl font-bold mb-6 text-purple-700 text-center">User Details</h2>
 
     <div *ngIf="user; else loading">
-      <p class="mb-4"><span class="font-semibold text-gray-700">Name:</span> {{ user.name }}</p>
+      <p class="mb-4"><span class="font-semibold text-gray-700">Name:</span> {{ user.username }}</p>
       <p class="mb-4"><span class="font-semibold text-gray-700">Email:</span> {{ user.email }}</p>
-      <p class="mb-4"><span class="font-semibold text-gray-700">Age:</span> {{ user.age }}</p>
-      <p class="mb-4"><span class="font-semibold text-gray-700">Gender:</span> {{ user.gender }}</p>
-      <p class="mb-4"><span class="font-semibold text-gray-700">Role:</span> {{ user.role }}</p>
+     
     </div>
 
     <ng-template #loading>

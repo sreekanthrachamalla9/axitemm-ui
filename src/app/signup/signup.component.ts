@@ -1,52 +1,51 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { AuthService } from '../Service/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router'; // ✅ Add this
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-signup',
-  templateUrl: './signup.component.html',
   standalone: true,
-  imports: [FormsModule, CommonModule, ],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, HttpClientModule],
+  templateUrl: './signup.component.html',
 })
-export class SignupComponent {
-  constructor(private authService: AuthService, private router: Router, httpClient: HttpClient) {}
+export class SignupComponent implements OnInit {
+  signupForm!: FormGroup;
 
-  signupData = {
-    name: '',
-    email: '',
-    username:'',
-  };
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
- onSubmit() {
-    const payload = { ...this.signupData };
+  ngOnInit(): void {
+    this.signupForm = this.fb.group({
+      username: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
+  }
 
-    // ✅ Safely delete 'id' if it somehow exists
-    if ('id' in payload) {
-      delete payload['id'];
-    }
+  onSubmit(): void {
+    if (this.signupForm.valid) {
+      const formData = this.signupForm.value;
 
-    console.log('🚀 Final payload being sent:', payload);
-
-    this.authService.registerUser(this.signupData).subscribe(
-      (res: any) => {
-        console.log('✅ Response from json-server:', res);
-
-        // Check what ID you get
-        if (typeof res.id === 'string') {
-          console.warn('⚠️ ID is a string:', res.id);
-        } else {
-          console.log('✅ ID is a number:', res.id);
+      this.http.post('http://localhost:8080/api/signup', formData, {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+      }).subscribe({
+        next: (res) => {
+          console.log('✅ Signup success:', res);
+          alert('Signup successful!');
+          this.router.navigate(['/login']);
+        },
+        error: (err) => {
+          console.error('❌ Signup failed:', err);
+          alert('Signup failed!');
         }
-
-        alert('Signup successful!');
-        this.router.navigate(['/users']);
-      },
-      err => {
-        console.error('❌ Signup error:', err);
-      }
-    );
+      });
+    } else {
+      this.signupForm.markAllAsTouched();
+    }
   }
 }

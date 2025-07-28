@@ -1,6 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule, isPlatformBrowser, } from '@angular/common';
-import { PLATFORM_ID } from '@angular/core';
+import { Component, inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser,  } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../Service/auth.service';
@@ -15,9 +14,9 @@ import { HttpClientModule } from '@angular/common/http';
 export class LoginComponent {
   private fb = inject(FormBuilder);
   private router = inject(Router);
-  private platformId = inject(PLATFORM_ID) as Object;
+  private platformId = inject(PLATFORM_ID);
   private authService = inject(AuthService);
-isBrowser = isPlatformBrowser(this.platformId );
+  isBrowser = isPlatformBrowser(this.platformId);
 
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
