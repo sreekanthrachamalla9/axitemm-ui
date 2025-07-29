@@ -36,12 +36,12 @@ export class AuthService {
     return this.http.delete(`${this.apiUrl}/api/users/${id}`);
   }
 
-  // ✅ Get user by ID (for view/edit)
+  // Get user by ID (for view/edit)
   getUserById(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/users/${id}`);
   }
 
-  // ✅ Update user by ID (for edit)
+  // Update user by ID (for edit)
   updateUser(id: number, data: any): Observable<any> {
     return this.http.patch(`${this.apiUrl}/api/users/${id}`, data);
   }
