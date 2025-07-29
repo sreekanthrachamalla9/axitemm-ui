@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthService } from '../Service/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-edit-user',

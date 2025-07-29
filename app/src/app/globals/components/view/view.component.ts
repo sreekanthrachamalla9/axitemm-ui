@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { AuthService } from '../Service/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-view',

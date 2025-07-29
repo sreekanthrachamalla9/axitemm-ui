@@ -2,8 +2,8 @@ import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser,  } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../Service/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
